@@ -1,0 +1,6 @@
+@DracarysAPI_HostAddress = http://localhost:5161
+
+GET {{DracarysAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
