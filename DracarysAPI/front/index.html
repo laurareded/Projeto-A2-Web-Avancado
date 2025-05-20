@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Dracarys API</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Dracarys API</h1>
+
+  <label for="entity-select"><strong>Escolha o recurso:</strong></label>
+  <select id="entity-select">
+    <option value="casa">Casa</option>
+    <option value="personagem">Personagem</option>
+    <option value="dragao">Dragão</option>
+  </select>
+
+  <section id="form-section"></section>
+
+  <section>
+    <h2>Listar <span id="entity-list-label">Casas</span></h2>
+    <button id="btn-listar">Buscar</button>
+    <ul id="listagem"></ul>
+  </section>
+
+  <section>
+    <h2>Buscar por ID</h2>
+    <input type="number" id="id-buscar" placeholder="Digite o ID" />
+    <button id="btn-buscar-id">Buscar</button>
+    <ul id="id-listagem"></ul>
+  </section>
+
+  <section>
+    <h2>Excluir por ID</h2>
+    <input type="number" id="id-excluir" placeholder="Digite o ID para excluir" />
+    <button id="btn-excluir-id">Excluir</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
