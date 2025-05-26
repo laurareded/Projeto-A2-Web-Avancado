@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const base = "http://localhost:5234/api"; 
+    const base = "http://localhost:5161/api"; 
   
     const schemas = {
       casa: {
@@ -87,4 +87,58 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(`Erro ao buscar ${schema.labelPlural}!`);
       }
     }
-});
+
+    
+    document.getElementById("btn-buscar-id").addEventListener("click", async () => {
+      const entity = document.getElementById("entity-select").value;
+      const id = document.getElementById("id-buscar").value;
+      if (!id) return alert("Informe um ID válido.");
+      const schema = schemas[entity];
+      const entityRoute = entity.charAt(0).toUpperCase() + entity.slice(1);
+      try {
+        const res = await fetch(`${base}/${entityRoute}/${id}`);
+        if (!res.ok) throw new Error();
+        const data = await res.json();
+        const listEl = document.getElementById("id-listagem");
+        listEl.innerHTML = "";
+        let text = `ID: ${data.id}`;
+        schema.fields.forEach(f => {
+          text += ` • ${f.label}: ${data[f.name]}`;
+        });
+        const li = document.createElement("li");
+        li.textContent = text;
+        listEl.appendChild(li);
+      } catch {
+        alert(`Erro ao buscar ${schema.labelSingular} com ID ${id}.`);
+      }
+    });
+  
+    
+    document.getElementById("btn-excluir-id").addEventListener("click", async () => {
+      const entity = document.getElementById("entity-select").value;
+      const id = document.getElementById("id-excluir").value;
+      if (!id) return alert("Informe um ID válido.");
+      const entityRoute = entity.charAt(0).toUpperCase() + entity.slice(1);
+      try {
+        const res = await fetch(`${base}/${entityRoute}/${id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error();
+        alert(`ID ${id} excluído com sucesso!`);
+      } catch {
+        alert(`Erro ao excluir ${entity} com ID ${id}.`);
+      }
+    });
+  
+    document.getElementById("btn-listar").addEventListener("click", () => {
+      const entity = document.getElementById("entity-select").value;
+      listarEntidades(entity);
+    });
+  
+    document.getElementById("entity-select").addEventListener("change", e => {
+      const ent = e.target.value;
+      renderForm(ent);
+      listarEntidades(ent);
+    });
+  
+    renderForm("casa");
+    listarEntidades("casa");
+  });
